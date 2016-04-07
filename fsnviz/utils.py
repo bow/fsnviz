@@ -15,10 +15,13 @@ from os import path
 from subprocess import run, PIPE
 
 import click
-
+from jinja2 import Environment, PackageLoader
 
 if sys.version_info[0] > 2:
     basestring = str
+
+JINJA2_ENV = Environment(loader=PackageLoader("fsnviz", "templates"))
+CIRCOS_CONF_TPL = "circos.conf.j2"
 
 
 def is_exe(fname):
@@ -69,3 +72,9 @@ def get_karyotype_file(kname,
                        circos_karyotype_path=path.join("data", "karyotype")):
     """Given a circos karyotype name, return its path for use in the config."""
     return path.join(circos_karyotype_path, "karyotype.{0}.txt".format(kname))
+
+
+def render_config(**kwargs):
+    """Renders the circos config file."""
+    tpl = JINJA2_ENV.get_template(CIRCOS_CONF_TPL)
+    return tpl.render(**kwargs)

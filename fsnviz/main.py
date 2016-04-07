@@ -27,12 +27,20 @@ __all__ = []
 @click.option("--out-dir", type=click.Path(),
               default=os.getcwd(),
               help="Output directory. Default: current directory.")
-@click.option("--karyotype",
+@click.option("-n", "--base-name", type=str,
+              default="fsnviz",
+              help="Base file name of the image output. "
+                   "Extensions will be added accordingly.")
+@click.option("-k", "--karyotype",
               type=click.Choice(["human.hg19", "human.hg38"]),
               default="human.hg38",
               help="Karyotype to use. Must be supported by circos. "
                    "If the `--karyotype-file` parameter is defined, "
                    "this parameter is ignored.")
+@click.option("--png/--no-png", default=False,
+              help="Whether to create PNG plots or not. Default: no.")
+@click.option("--svg/--no-svg", default=True,
+              help="Whether to create SVG plots or not. Default: yes.")
 @click.option("--karyotype-file",
               type=click.Path(exists=True, dir_okay=False, readable=True),
               help="Karyotype file to use. This parameter takes precedence "
@@ -48,13 +56,21 @@ __all__ = []
                    "configuration files and data files. Default: "
                    "{0}".format(gettempdir()))
 @click.pass_context
-def cli(ctx, out_dir, karyotype, karyotype_file, circos_exe, tmp_dir):
+def cli(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
+        circos_exe, tmp_dir):
     """Plots gene fusion finding tools' output using circos."""
-    kfile = karyotype_file if karyotype_file is not None else gkf(karyotype)
-    ctx.params["karyotype_file"] = kfile
-    ctx.params["out_dir"] = out_dir
     ctx.params["circos_exe"] = which_circos(circos_exe)
     ctx.params["tmp_dir"] = tmp_dir
+
+    kfile = karyotype_file if karyotype_file is not None else gkf(karyotype)
+    # Parameters passable directly to our jinja template
+    ctx.params["_j2"] = {
+        "karyotype": kfile,
+        "image_dir": out_dir,
+        "image_file": base_name,
+        "image_png": "yes" if png else "no",
+        "image_svg": "yes" if svg else "no",
+    }
 
 
 @cli.command(name="star-fusion")
@@ -62,4 +78,4 @@ def cli(ctx, out_dir, karyotype, karyotype_file, circos_exe, tmp_dir):
 @click.pass_context
 def star_fusion(ctx, input):
     """Plots output of STAR-Fusion."""
-    m_star_fusion.plot(input)
+    m_star_fusion.plot(input, ctx.parent.params["_j2"])

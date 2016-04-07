@@ -11,10 +11,13 @@
 """
 from crimson.star_fusion import parse
 
+from .utils import render_config
+
 
 __all__ = ["plot"]
 
 
-def plot(results_fname):
+def plot(input_fname, tpl_params):
     """Creates a circos plot of the given STAR-Fusion results file."""
-    payload = parse(results_fname)
+    payload = parse(input_fname)
+    print(render_config(**tpl_params))
