@@ -16,7 +16,7 @@ import click
 
 from . import __version__
 from . import star_fusion as m_star_fusion
-from .utils import which_circos
+from .utils import which_circos, get_karyotype_file as gkf
 
 
 __all__ = []
@@ -27,6 +27,16 @@ __all__ = []
 @click.option("--out-dir", type=click.Path(),
               default=os.getcwd(),
               help="Output directory. Default: current directory.")
+@click.option("--karyotype",
+              type=click.Choice(["human.hg19", "human.hg38"]),
+              default="human.hg38",
+              help="Karyotype to use. Must be supported by circos. "
+                   "If the `--karyotype-file` parameter is defined, "
+                   "this parameter is ignored.")
+@click.option("--karyotype-file",
+              type=click.Path(exists=True, dir_okay=False, readable=True),
+              help="Karyotype file to use. This parameter takes precedence "
+                   "over the `--karyotype` parameter.")
 @click.option("--circos-exe", type=str, default="circos",
               help="Circos executable. Default: circos "
                    "(the one accessible via PATH).")
@@ -38,8 +48,10 @@ __all__ = []
                    "configuration files and data files. Default: "
                    "{0}".format(gettempdir()))
 @click.pass_context
-def cli(ctx, out_dir, circos_exe, tmp_dir):
+def cli(ctx, out_dir, karyotype, karyotype_file, circos_exe, tmp_dir):
     """Plots gene fusion finding tools' output using circos."""
+    kfile = karyotype_file if karyotype_file is not None else gkf(karyotype)
+    ctx.params["karyotype_file"] = kfile
     ctx.params["out_dir"] = out_dir
     ctx.params["circos_exe"] = which_circos(circos_exe)
     ctx.params["tmp_dir"] = tmp_dir

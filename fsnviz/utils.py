@@ -63,3 +63,9 @@ def which_circos(exe="circos"):
         msg = "Some required Perl modules for circos can not be found."
         raise click.BadParameter(msg)
     return circos_exe
+
+
+def get_karyotype_file(kname,
+                       circos_karyotype_path=path.join("data", "karyotype")):
+    """Given a circos karyotype name, return its path for use in the config."""
+    return path.join(circos_karyotype_path, "karyotype.{0}.txt".format(kname))
