@@ -1,0 +1,12 @@
+# Python #
+*.pyc
+*.pyo
+*.egg-info
+.coverage
+.tox
+.cache
+htmlcov/
+
+# Temp files #
+*.swp
+*.swo
