@@ -74,6 +74,14 @@ def get_karyotype_file(kname,
     return path.join(circos_karyotype_path, "karyotype.{0}.txt".format(kname))
 
 
+def adjust_chrom(chromosome, species="human"):
+    """Adjust the given chromosome name to be circos-compatible."""
+    # TODO: support nonhuman species
+    if chromosome.startswith("chr"):
+        return "hs" + chromosome[3:]
+    return "hs" + chromosome
+
+
 def render_config(**kwargs):
     """Renders the circos config file."""
     tpl = JINJA2_ENV.get_template(CIRCOS_CONF_TPL)
