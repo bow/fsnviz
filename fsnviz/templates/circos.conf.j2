@@ -28,7 +28,7 @@ karyotype                   = {{ karyotype }}
   dir*               = {{ image_dir|default(".") }}
   file*              = {{ image_file }}
   png*               = {{ image_png|default("no") }}
-  radius*            = 1500p
+  radius*            = 1600p
   svg*               = {{ image_svg|default("yes") }}
 </image>
 
@@ -80,7 +80,7 @@ karyotype                   = {{ karyotype }}
 
 # fusion links
 <links>
-  bezier_radius = 0.5r
+  bezier_radius = 0.6r
   radius        = 0.94r
   z             = 0
 
@@ -92,33 +92,16 @@ karyotype                   = {{ karyotype }}
 
   <rules>
     <rule>
-      condition  = _SIZE1_ < 1.5kb || _SIZE2_ < 1.5kb
-      importance = 110
-      show       = yes
-    </rule>
-
-    # the next two rules must contain flow=continue because it 
-    # always matches and you do not want it to terminate
-    # the rule chain (otherwise the color rule would
-    # never be checked)
-    <rule>
-      condition  = 1
-      flow       = continue
-      importance = 100
-      thickness  = eval(max(1,min(6,exp(_SIZE1_/50000))))
+      bezier_radius = 0.02r
+      condition     = var(chr1) ne var(chr2)
+      color         = orange
+      importance    = 120
     </rule>
 
     <rule>
-      bezier_radius = eval( (0.5 + 0.4*(1-abs(_START1_-_START2_) / 100Mb)) . "r")
-      condition     = _CHR1_ eq _CHR2_ && abs(_START1_-_START2_) < 100Mb
-      flow          = continue
-      importance    = 95
-    </rule>
-
-    <rule>
-      color      = red
-      condition  = (_CHR1_ eq "hs2" && abs(_START1_ - 100Mb) < 20Mb) || (_CHR2_ eq "hs2" && abs(_START2_ - 100Mb) < 20Mb)
-      importance = 90
+      condition     = var(chr1) eq var(chr2)
+      color         = blue
+      importance    = 110
     </rule>
   </rules>
 
@@ -146,7 +129,7 @@ karyotype                   = {{ karyotype }}
     show_links                     = yes
     snuggle_link_overlap_test      = yes
     snuggle_link_overlap_tolerance = 0p
-    snuggle_refine                 = no
+    snuggle_refine                 = yes
     snuggle_sampling               = 2
     snuggle_tolerance              = 0r
     type                           = text
