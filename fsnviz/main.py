@@ -10,11 +10,11 @@
 
 """
 import os
-from tempfile import gettempdir
 
 import click
 
 from . import __version__
+from .models import FsnVizConfig
 from .star_fusion import STARFusionResults
 from .utils import which_circos, get_karyotype_file as gkf
 
@@ -48,19 +48,12 @@ __all__ = []
 @click.option("--circos-exe", type=str, default="circos",
               help="Circos executable. Default: circos "
                    "(the one accessible via PATH).")
-@click.option("--tmp-dir",
-              type=click.Path(exists=True, file_okay=False, writable=True,
-                              readable=True),
-              default=gettempdir(),
-              help="Working directory in which fsnviz will write circos "
-                   "configuration files and data files. Default: "
-                   "{0}".format(gettempdir()))
 @click.pass_context
 def cli(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
-        circos_exe, tmp_dir):
+        circos_exe):
     """Plots gene fusion finding tools' output using circos."""
-    ctx.params["circos_exe"] = which_circos(circos_exe)
-    ctx.params["tmp_dir"] = tmp_dir
+    ctx.params["_config"] = \
+        FsnVizConfig(which_circos(circos_exe), base_name, out_dir)
 
     kfile = karyotype_file if karyotype_file is not None else gkf(karyotype)
     # Parameters passable directly to our jinja template
@@ -78,5 +71,6 @@ def cli(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
 @click.pass_context
 def star_fusion(ctx, input):
     """Plots output of STAR-Fusion."""
-    res = STARFusionResults(input, ctx.parent.params["_j2"])
+    res = STARFusionResults(input, ctx.parent.params["_config"],
+                            ctx.parent.params["_j2"])
     res.plot()

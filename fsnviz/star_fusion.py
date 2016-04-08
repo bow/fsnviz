@@ -24,8 +24,8 @@ class STARFusionResults(FusionToolResults):
 
     mito_names = ("chrM", "M", "MT")
 
-    def __init__(self, results_fname, tpl_params):
-        super().__init__(results_fname, tpl_params)
+    def __init__(self, results_fname, config, tpl_params):
+        super().__init__(results_fname, config, tpl_params)
         self.payload = parse(results_fname)
 
     def _make_circos_entry(self, raw_entry):

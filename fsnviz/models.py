@@ -10,12 +10,23 @@
 
 """
 import abc
+import os
+import sys
 from collections import namedtuple
+from os import path
+from subprocess import run
+
+import click
 
 from .utils import render_config
 
 
-__all__ = ["CircosEntry", "CircosLink", "CircosLabel", "FusionToolResults"]
+__all__ = ["CircosEntry", "CircosLink", "CircosLabel", "FsnVizConfig",
+           "FusionToolResults"]
+
+
+FsnVizConfig = namedtuple("FsnVizConfig",
+                          ["circos_exe", "base_name", "out_dir"])
 
 
 BaseCircosLabel = namedtuple("BaseCircosLabel",
@@ -81,8 +92,13 @@ class FusionToolResults(metaclass=abc.ABCMeta):
     def circos_entries(self):
         """Circos entries present in the tool results."""
 
-    def __init__(self, results_fname, tpl_params):
+    def __init__(self, results_fname, config, tpl_params):
         self._tpl_params = tpl_params
+        self._config = config
+        out_dir = self.config.out_dir
+        self._circos_config_file = path.join(out_dir, "circos.conf")
+        self._links_file = path.join(out_dir, "links.txt")
+        self._genes_file = path.join(out_dir, "genes.txt")
 
     @property
     def gene_entries(self):
@@ -98,16 +114,48 @@ class FusionToolResults(metaclass=abc.ABCMeta):
             yield entry.make_link_entry()
 
     @property
+    def config(self):
+        """Internal config values."""
+        return self._config
+
+    @property
     def tpl_params(self):
         """Parameters for rendering circos config file."""
         return self._tpl_params
 
+    def _prep_dir(self):
+        out_dir = self.config.out_dir
+        if not path.exists(out_dir):
+            os.makedirs(out_dir)
+        elif path.exists(out_dir) and path.isfile(out_dir):
+            msg = "Path '{0}' already exists as a file."
+            raise click.BadParameter(msg.format(out_dir))
+
+    def _write_circos_config(self):
+        tpl_params = self.tpl_params
+        tpl_params["fusion_links_file"] = self._links_file
+        tpl_params["gene_labels_file"] = self._genes_file
+        with open(self._circos_config_file, "w") as target:
+            print(render_config(**tpl_params), file=target)
+
+    def _write_links_file(self):
+        with open(self._links_file, "w") as target:
+            for link in self.link_entries:
+                print(link, file=target)
+
+    def _write_genes_file(self):
+        with open(self._genes_file, "w") as target:
+            for gene in self.gene_entries:
+                print(gene, file=target)
+
+    def _execute_circos(self):
+        cmd_toks = [self.config.circos_exe, "-conf", self._circos_config_file]
+        run(cmd_toks)
+
     def plot(self):
         """Plots the fusion tool results."""
-        print(render_config(**self.tpl_params))
-        print()
-        for link in self.link_entries:
-            print(link)
-        print()
-        for gene in self.gene_entries:
-            print(gene)
+        self._prep_dir()
+        self._write_links_file()
+        self._write_genes_file()
+        self._write_circos_config()
+        self._execute_circos()
