@@ -11,13 +11,46 @@
 """
 from crimson.star_fusion import parse
 
-from .utils import render_config
+from .models import CircosEntry, CircosLabel, CircosLink, FusionToolResults
+from .utils import adjust_chrom
 
 
-__all__ = ["plot"]
+__all__ = ["STARFusionResults"]
 
 
-def plot(input_fname, tpl_params):
-    """Creates a circos plot of the given STAR-Fusion results file."""
-    payload = parse(input_fname)
-    print(render_config(**tpl_params))
+class STARFusionResults(FusionToolResults):
+
+    """Class representing a STAR-Fusion run result."""
+
+    mito_names = ("chrM", "M", "MT")
+
+    def __init__(self, results_fname, tpl_params):
+        super().__init__(results_fname, tpl_params)
+        self.payload = parse(results_fname)
+
+    def _make_circos_entry(self, raw_entry):
+        left = raw_entry["left"]
+        right = raw_entry["right"]
+        if left["chromosome"] in self.mito_names:
+            return
+        if right["chromosome"] in self.mito_names:
+            return
+        lchrom = adjust_chrom(left["chromosome"])
+        rchrom = adjust_chrom(right["chromosome"])
+
+        link = CircosLink(lchrom, left["position"], left["position"] + 1,
+                          rchrom, right["position"], right["position"] + 1)
+
+        geneA = CircosLabel(lchrom, left["position"], left["position"] + 1,
+                            left["geneName"])
+        geneB = CircosLabel(rchrom, right["position"], right["position"] + 1,
+                            right["geneName"])
+
+        return CircosEntry(link, [geneA, geneB])
+
+    @property
+    def circos_entries(self):
+        if not hasattr(self, "_circos_entries"):
+            entries = [self._make_circos_entry(x) for x in self.payload]
+            self._circos_entries = list(filter(None, entries))
+        return self._circos_entries
