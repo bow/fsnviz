@@ -28,7 +28,7 @@ karyotype                   = {{ karyotype }}
   dir*               = {{ image_dir|default(".") }}
   file*              = {{ image_file }}
   png*               = {{ image_png|default("no") }}
-  radius*            = 1600p
+  radius*            = 2000p
   svg*               = {{ image_svg|default("yes") }}
 </image>
 
@@ -44,10 +44,10 @@ karyotype                   = {{ karyotype }}
   label_case     = upper
   label_font     = condensedbold
   label_parallel = yes
-  label_radius   = dims(ideogram,radius) - 0.15r
+  label_radius   = dims(ideogram,radius) - 0.13r
   label_size     = 40p
   label_with_tag = yes
-  radius         = 0.75r
+  radius         = 0.70r
   show_label     = yes
 
   # cytogenetic bands
@@ -81,7 +81,7 @@ karyotype                   = {{ karyotype }}
 # fusion links
 <links>
   bezier_radius = 0.6r
-  radius        = 0.94r
+  radius        = 0.93r
   z             = 0
 
   <link segdup>
@@ -115,15 +115,15 @@ karyotype                   = {{ karyotype }}
     file                           = {{ gene_labels_file }}
     label_font                     = condensed
     label_rotate                   = yes
-    label_size                     = 30p
+    label_size                     = 40p
     label_snuggle                  = yes
     link_color                     = grey
-    link_dims                      = 4p,45p,40p,40p,10p
+    link_dims                      = 4p,200p,40p,20p,10p
     link_thickness                 = 4p
     max_snuggle_distance           = 4r
     padding                        = 10p
-    r0                             = 1r
-    r1                             = 1r+400p
+    r0                             = 1.01r
+    r1                             = 1.01r+500p
     rpadding                       = 0p
     show                           = yes
     show_links                     = yes
@@ -133,6 +133,63 @@ karyotype                   = {{ karyotype }}
     snuggle_sampling               = 2
     snuggle_tolerance              = 0r
     type                           = text
+  </plot>
+
+  <plot>
+
+    type             = scatter
+    file             = {{ junction_reads_file }}
+    fill_color       = dred
+    color            = dred
+    glyph            = circle
+    glyph_size       = 18
+
+    max   = 7.0
+    min   = 0.0
+    r1    = 1.08r
+    r0    = 1.01r
+
+    <backgrounds>
+        <background>
+        color     = vlred_a4
+        y1        = 0.33r
+        </background>
+        <background>
+        color     = vlred_a4
+        y1        = 0.67r
+        </background>
+        <background>
+        color     = vlred_a4
+        </background>
+    </backgrounds>
+  </plot>
+
+  <plot>
+    type             = scatter
+    file             = {{ spanning_frags_file }}
+    fill_color       = dpurple
+    color            = dpurple
+    glyph            = circle
+    glyph_size       = 18
+
+    max   = 3.5
+    min   = 0.0
+    r1    = 1.16r
+    r0    = 1.09r
+
+    <backgrounds>
+        <background>
+        color     = vlpurple_a4
+        y1        = 0.33r
+        </background>
+        <background>
+        color     = vlpurple_a4
+        y1        = 0.67r
+        </background>
+        <background>
+        color     = vlpurple_a4
+        </background>
+    </backgrounds>
   </plot>
 </plots>
 

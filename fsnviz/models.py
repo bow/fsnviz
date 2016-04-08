@@ -13,6 +13,7 @@ import abc
 import os
 import sys
 from collections import namedtuple
+from math import log
 from os import path
 from subprocess import run
 
@@ -42,9 +43,9 @@ class CircosLabel(BaseCircosLabel):
 
     """Class representing a circos label."""
 
-    def make_entry(self, **kwargs):
+    def make_entry(self, vfunc=str, **kwargs):
         base = " ".join([str(x) for x in [self.chrom, self.start,
-                                          self.end, self.value]])
+                                          self.end, vfunc(self.value)]])
         if not kwargs:
             return base
 
@@ -71,9 +72,12 @@ class CircosEntry(object):
 
     """Class representing a circos fusion plot entry."""
 
-    def __init__(self, link, genes, link_params={}, genes_params={}):
+    def __init__(self, link, genes, junction_reads, spanning_frags,
+                 link_params={}, genes_params={}):
         self.link = link
         self.genes = genes
+        self.junction_reads = junction_reads
+        self.spanning_frags = spanning_frags
         self.link_params = link_params
         self.genes_params = genes_params
 
@@ -99,6 +103,8 @@ class FusionToolResults(metaclass=abc.ABCMeta):
         self._circos_config_file = path.join(out_dir, "circos.conf")
         self._links_file = path.join(out_dir, "links.txt")
         self._genes_file = path.join(out_dir, "genes.txt")
+        self._junction_reads_file = path.join(out_dir, "junction_reads.txt")
+        self._spanning_frags_file = path.join(out_dir, "spanning_frags.txt")
 
     @property
     def gene_entries(self):
@@ -135,6 +141,8 @@ class FusionToolResults(metaclass=abc.ABCMeta):
         tpl_params = self.tpl_params
         tpl_params["fusion_links_file"] = self._links_file
         tpl_params["gene_labels_file"] = self._genes_file
+        tpl_params["junction_reads_file"] = self._junction_reads_file
+        tpl_params["spanning_frags_file"] = self._spanning_frags_file
         with open(self._circos_config_file, "w") as target:
             print(render_config(**tpl_params), file=target)
 
@@ -148,6 +156,21 @@ class FusionToolResults(metaclass=abc.ABCMeta):
             for gene in self.gene_entries:
                 print(gene, file=target)
 
+    def _write_data_files(self):
+        with open(self._junction_reads_file, "w") as target:
+            for ce in self.circos_entries:
+                for jr in ce.junction_reads:
+                    if jr.value == 0:
+                        continue
+                    print(jr.make_entry(vfunc=log), file=target)
+
+        with open(self._spanning_frags_file, "w") as target:
+            for ce in self.circos_entries:
+                for sf in ce.spanning_frags:
+                    if sf.value == 0:
+                        continue
+                    print(sf.make_entry(vfunc=log), file=target)
+
     def _execute_circos(self):
         cmd_toks = [self.config.circos_exe, "-conf", self._circos_config_file]
         run(cmd_toks)
@@ -157,5 +180,6 @@ class FusionToolResults(metaclass=abc.ABCMeta):
         self._prep_dir()
         self._write_links_file()
         self._write_genes_file()
+        self._write_data_files()
         self._write_circos_config()
         self._execute_circos()

@@ -46,7 +46,20 @@ class STARFusionResults(FusionToolResults):
         geneB = CircosLabel(rchrom, right["position"], right["position"] + 1,
                             right["geneName"])
 
-        return CircosEntry(link, [geneA, geneB])
+        njr = raw_entry["nJunctionReads"]
+        nsf = raw_entry["nSpanningFrags"]
+
+        jrA = CircosLabel(lchrom, left["position"], left["position"] + 1,
+                          njr)
+        jrB = CircosLabel(rchrom, right["position"], right["position"] + 1,
+                          njr)
+
+        sfA = CircosLabel(lchrom, left["position"], left["position"] + 1,
+                          nsf)
+        sfB = CircosLabel(rchrom, right["position"], right["position"] + 1,
+                          nsf)
+
+        return CircosEntry(link, [geneA, geneB], [jrA, jrB], [sfA, sfB])
 
     @property
     def circos_entries(self):
