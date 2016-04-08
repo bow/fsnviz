@@ -15,7 +15,7 @@ from tempfile import gettempdir
 import click
 
 from . import __version__
-from . import star_fusion as m_star_fusion
+from .star_fusion import STARFusionResults
 from .utils import which_circos, get_karyotype_file as gkf
 
 
@@ -78,4 +78,5 @@ def cli(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
 @click.pass_context
 def star_fusion(ctx, input):
     """Plots output of STAR-Fusion."""
-    m_star_fusion.plot(input, ctx.parent.params["_j2"])
+    res = STARFusionResults(input, ctx.parent.params["_j2"])
+    res.plot()
