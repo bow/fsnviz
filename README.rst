@@ -22,6 +22,13 @@ Usage
 TODO
 
 
+Credits
+-------
+
+* Initial circos templates were based on the circos templates of `viewFusion <https://github.com/riverlee/viewFusion>`_,
+  written by Jiang Li.
+
+
 License
 =======
 
