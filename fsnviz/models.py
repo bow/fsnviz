@@ -11,7 +11,6 @@
 """
 import abc
 import os
-import sys
 from collections import namedtuple
 from math import log
 from os import path
