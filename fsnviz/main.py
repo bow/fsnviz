@@ -26,11 +26,11 @@ __all__ = []
 @click.version_option(__version__)
 @click.option("--out-dir", type=click.Path(),
               default=os.getcwd(),
-              help="Output directory. Default: current directory.")
+              help="Output directory. Default: current run directory.")
 @click.option("-n", "--base-name", type=str,
               default="fsnviz",
               help="Base file name of the image output. "
-                   "Extensions will be added accordingly.")
+                   "Filename extensions will be added accordingly.")
 @click.option("-k", "--karyotype",
               type=click.Choice(["human.hg19", "human.hg38"]),
               default="human.hg38",
