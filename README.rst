@@ -10,6 +10,7 @@ FsnViz
 .. image:: https://badge.fury.io/py/fsnviz.svg
     :target: http://badge.fury.io/py/fsnviz
 
+
 FsnViz is a Python tool for plotting RNA-seq fusion events using Circos plots.
 It parses outputs of gene fusion finding tools and creates Circos plots out of
 it.
@@ -21,7 +22,7 @@ Currently it accepts outputs of the following gene fusion finding tool:
 
 
 Requirements
-~~~~~~~~~~~~
+------------
 
 FsnViz runs on Python 3.5 and was tested on Circos 0.69-2. Other Circos
 versions may or may not work.
@@ -30,8 +31,11 @@ versions may or may not work.
 Installation
 ------------
 
-FsnViz is currently only available via this git repository. You will also
-need Circos installed in your system for it to work.
+You can download the latest version via pip:
+
+    $ pip install fsnviz
+
+Circos needs to be installed separately.
 
 
 Usage
@@ -63,6 +67,6 @@ Credits
 
 
 License
-=======
+-------
 
 FsnViz is BSD-licensed. Refer to the ``LICENSE`` file for the full license.
