@@ -33,10 +33,10 @@ __all__ = []
                    "Filename extensions will be added accordingly.")
 @click.option("-k", "--karyotype",
               type=click.Choice(["human.hg19", "human.hg38"]),
-              default="human.hg38",
+              default="human.hg19",
               help="Karyotype to use. Must be supported by circos. "
                    "If the `--karyotype-file` parameter is defined, "
-                   "this parameter is ignored. Default: human.hg38.")
+                   "this parameter is ignored. Default: human.hg19.")
 @click.option("--png/--no-png", default=False,
               help="Whether to create PNG plots or not. Default: no.")
 @click.option("--svg/--no-svg", default=True,
