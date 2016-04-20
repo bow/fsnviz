@@ -36,7 +36,7 @@ __all__ = []
               default="human.hg38",
               help="Karyotype to use. Must be supported by circos. "
                    "If the `--karyotype-file` parameter is defined, "
-                   "this parameter is ignored.")
+                   "this parameter is ignored. Default: human.hg38.")
 @click.option("--png/--no-png", default=False,
               help="Whether to create PNG plots or not. Default: no.")
 @click.option("--svg/--no-svg", default=True,
