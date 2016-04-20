@@ -30,3 +30,6 @@ install:
 
 script:
     - py.test -v -n `nproc` --flake8 --cov-config .coveragerc --cov fsnviz fsnviz/
+
+after_success:
+    - coveralls
