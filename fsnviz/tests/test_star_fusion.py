@@ -25,6 +25,7 @@ def test_star_fusion_ok():
     with runner.isolated_filesystem():
         cmd = runner.invoke(cli, ["star-fusion", FNAME1])
         assert cmd.exit_code == 0
+        assert "created SVG image" in cmd.output
         assert path.exists("fsnviz.svg")
 
 
@@ -46,6 +47,7 @@ def test_star_fusion_out_dir_ok():
         params = ["--out-dir", out_dir]
         cmd = runner.invoke(cli, params + ["star-fusion", FNAME1])
         assert cmd.exit_code == 0
+        assert "created SVG image" in cmd.output
         assert path.exists(path.join(out_dir, "fsnviz.svg"))
         assert not path.exists("fsnviz.svg")
 
@@ -57,6 +59,7 @@ def test_star_fusion_base_name_ok():
         params = ["--base-name", base_name]
         cmd = runner.invoke(cli, params + ["star-fusion", FNAME1])
         assert cmd.exit_code == 0
+        assert "created SVG image" in cmd.output
         assert path.exists("{0}.svg".format(base_name))
         assert not path.exists("fsnviz.svg")
 
@@ -67,6 +70,7 @@ def test_star_fusion_karyotype_ok():
         params = ["--karyotype", "human.hg19"]
         cmd = runner.invoke(cli, params + ["star-fusion", FNAME1])
         assert cmd.exit_code == 0
+        assert "created SVG image" in cmd.output
         assert path.exists("fsnviz.svg")
 
 
@@ -76,5 +80,7 @@ def test_star_fusion_karyotype_png_ok():
         params = ["--png"]
         cmd = runner.invoke(cli, params + ["star-fusion", FNAME1])
         assert cmd.exit_code == 0
+        assert "created SVG image" in cmd.output
+        assert "created PNG image" in cmd.output
         assert path.exists("fsnviz.svg")
         assert path.exists("fsnviz.png")
