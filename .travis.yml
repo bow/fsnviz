@@ -29,4 +29,4 @@ install:
     - pip install coveralls --use-wheel
 
 script:
-    - py.test -v --flake8 fsnviz/
+    - py.test -v --flake8 --cov-config .coveragerc --cov fsnviz fsnviz
