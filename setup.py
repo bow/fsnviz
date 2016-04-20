@@ -38,17 +38,17 @@ setup(
     [console_scripts]
     fsnviz=fsnviz.main:cli
     """,
-    keywords="rnaseq fusion circos plot bioinformatics",
+    keywords="rnaseq fusion circos plot bioinformatics visualization",
     tests_require=test_requirements,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
         "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: BSD License",
         "Operating System :: POSIX",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.5",
         "Topic :: Utilities",
-        "Topic :: Software Development :: Libraries",
+        "Topic :: Scientific/Engineering :: Visualization",
     ],
 )
