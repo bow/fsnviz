@@ -11,7 +11,7 @@ env:
     - CIRCOS_VERSION=0.69-2
     - CIRCOS_PKG=circos-${CIRCOS_VERSION}.tgz
     - CIRCOS_URL=http://circos.ca/distribution/${CIRCOS_PKG}
-    - PATH=${TRAVIS_BUILD_DIR}/${CIRCOS_VERSION}/bin:${PATH}
+    - PATH=${TRAVIS_BUILD_DIR}/circos-${CIRCOS_VERSION}/bin:${PATH}
 
 before_install:
 
