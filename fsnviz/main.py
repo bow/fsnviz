@@ -25,7 +25,7 @@ __all__ = []
 @click.group()
 @click.version_option(__version__)
 @click.option("--out-dir", type=click.Path(),
-              default=os.getcwd(),
+              default=None,
               help="Output directory. Default: current run directory.")
 @click.option("-n", "--base-name", type=str,
               default="fsnviz",
@@ -51,6 +51,8 @@ __all__ = []
 @click.pass_context
 def cli(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
         circos_exe):
+    if out_dir is None:
+        out_dir = os.getcwd()
     """Plots gene fusion finding tools' output using circos."""
     ctx.params["_config"] = \
         FsnVizConfig(which_circos(circos_exe), base_name, out_dir)
