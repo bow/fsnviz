@@ -19,6 +19,8 @@ Currently it accepts outputs of the following gene fusion finding tool:
 
 * `STAR-Fusion <https://github.com/STAR-Fusion/STAR-Fusion>`_ hits table
   (``star-fusion``)
+* `FusionCatcher <https://github.com/ndaniel/fusioncatcher>`_ final table
+  (``fusioncatcher``)
 
 
 Requirements

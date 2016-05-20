@@ -15,6 +15,7 @@ import click
 
 from . import __version__
 from .models import FsnVizConfig
+from .fusioncatcher import FusionCatcherResults
 from .star_fusion import STARFusionResults
 from .utils import which_circos, get_karyotype_file as gkf
 
@@ -75,4 +76,14 @@ def star_fusion(ctx, input):
     """Plots output of STAR-Fusion."""
     res = STARFusionResults(input, ctx.parent.params["_config"],
                             ctx.parent.params["_j2"])
+    res.plot()
+
+
+@cli.command(name="fusioncatcher")
+@click.argument("input", type=click.File("r"))
+@click.pass_context
+def fusioncatcher(ctx, input):
+    """Plots output of FusionCatcher."""
+    res = FusionCatcherResults(input, ctx.parent.params["_config"],
+                               ctx.parent.params["_j2"])
     res.plot()
