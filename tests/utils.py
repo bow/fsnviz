@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    fsnviz.tests.utils
-    ~~~~~~~~~~~~~~~~~~
-
-    General test utilities.
+    General test utilities
+    ~~~~~~~~~~~~~~~~~~~~~~
 
     :copyright: (c) 2016 Wibowo Arindrarto <bow@bow.web.id>
     :license: BSD
