@@ -9,10 +9,10 @@
 """
 from click.testing import CliRunner
 
-from fsnviz.main import cli
+from fsnviz.main import main
 
 
 def test_help():
     runner = CliRunner()
-    cmd = runner.invoke(cli, ["--help"])
+    cmd = runner.invoke(main, ["--help"])
     assert cmd.exit_code == 0

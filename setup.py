@@ -36,7 +36,7 @@ setup(
     zip_safe=False,
     entry_points="""
     [console_scripts]
-    fsnviz=fsnviz.main:cli
+    fsnviz=fsnviz.cli:main
     """,
     keywords="rnaseq fusion circos plot bioinformatics visualization",
     tests_require=test_requirements,

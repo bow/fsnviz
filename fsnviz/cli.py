@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-    fsnviz.main
-    ~~~~~~~~~~~
+    fsnviz.cli
+    ~~~~~~~~~~
 
     Main entry point for command line invocation.
 
@@ -50,8 +50,8 @@ __all__ = []
               help="Circos executable. Default: circos "
                    "(the one accessible via PATH).")
 @click.pass_context
-def cli(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
-        circos_exe):
+def main(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
+         circos_exe):
     if out_dir is None:
         out_dir = os.getcwd()
     """Plots gene fusion finding tools' output using circos."""
@@ -69,7 +69,7 @@ def cli(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
     }
 
 
-@cli.command(name="star-fusion")
+@main.command(name="star-fusion")
 @click.argument("input", type=click.File("r"))
 @click.pass_context
 def star_fusion(ctx, input):
@@ -79,7 +79,7 @@ def star_fusion(ctx, input):
     res.plot()
 
 
-@cli.command(name="fusioncatcher")
+@main.command(name="fusioncatcher")
 @click.argument("input", type=click.File("r"))
 @click.pass_context
 def fusioncatcher(ctx, input):
