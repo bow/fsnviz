@@ -11,7 +11,7 @@ from os import path
 
 from click.testing import CliRunner
 
-from fsnviz.main import main
+from fsnviz.cli import main
 from .utils import get_test_path
 
 

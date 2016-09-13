@@ -9,7 +9,7 @@
 """
 from click.testing import CliRunner
 
-from fsnviz.main import main
+from fsnviz.cli import main
 
 
 def test_help():
