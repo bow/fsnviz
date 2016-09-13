@@ -26,10 +26,10 @@ before_install:
 
 install:
     - python setup.py install
-    - pip install coveralls --use-wheel
+    - pip install codecov==2.0.5
 
 script:
     - py.test -n auto --cov --cov-config .coveragerc --flake8 tests fsnviz
 
 after_success:
-    - coveralls
+    - codecov

@@ -1,13 +1,15 @@
 FsnViz
 ======
 
-.. image:: https://travis-ci.org/bow/fsnviz.svg?branch=master
+|ci| |coverage| |pypi|
+
+.. |ci| image:: https://travis-ci.org/bow/fsnviz.svg?branch=master
     :target: https://travis-ci.org/bow/fsnviz
 
-.. image:: https://coveralls.io/repos/bow/fsnviz/badge.svg?branch=master&service=github
-    :target: https://coveralls.io/github/bow/fsnviz?branch=master
+.. |coverage| image:: https://codecov.io/gh/bow/fsnviz/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/bow/fsnviz
 
-.. image:: https://badge.fury.io/py/fsnviz.svg
+.. |pypi| image:: https://badge.fury.io/py/fsnviz.svg
     :target: http://badge.fury.io/py/fsnviz
 
 
