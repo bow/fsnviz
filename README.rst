@@ -9,7 +9,7 @@ FsnViz
 .. |coverage| image:: https://codecov.io/gh/bow/fsnviz/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/bow/fsnviz
 
-.. |pypi| image:: https://badge.fury.io/py/fsnviz.svg
+.. |pypi| image:: https://badge.fury.io/py/FsnViz.svg
     :target: http://badge.fury.io/py/fsnviz
 
 
