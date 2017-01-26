@@ -1,3 +1,3 @@
-click==6.6
+click==6.7
 Crimson>=0.3.0
-Jinja2==2.8
+Jinja2==2.9.4
