@@ -23,7 +23,8 @@ with open("requirements-dev.txt") as src:
 setup(
     name="FsnViz",
     version=__version__,
-    description="Tool for plotting gene fusion events using Circos.",
+    description="Tool for plotting gene fusion events detected by"
+                " various tools using Circos.",
     long_description=readme + "\n\n" + history,
     author=__author__,
     author_email=__contact__,
