@@ -1,7 +1,7 @@
 .. :changelog:
 
-History
-=======
+Changelog
+=========
 
 
 Versions 0.2
