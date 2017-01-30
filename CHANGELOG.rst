@@ -10,7 +10,7 @@ Versions 0.2
 Release 0.2.0
 ^^^^^^^^^^^^^
 
-`release date: TBD`
+`release date: 30 January 2016`
 
 * Adds support for plotting FusionCatcher output.
 
