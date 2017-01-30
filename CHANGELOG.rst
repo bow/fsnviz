@@ -4,6 +4,15 @@ Changelog
 =========
 
 
+Versions 0.3
+------------
+
+Release 0.3.0
+^^^^^^^^^^^^^
+
+`release date: TBD`
+
+
 Versions 0.2
 ------------
 
