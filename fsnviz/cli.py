@@ -52,9 +52,9 @@ __all__ = []
 @click.pass_context
 def main(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
          circos_exe):
+    """Plots gene fusion finding tools' output using circos."""
     if out_dir is None:
         out_dir = os.getcwd()
-    """Plots gene fusion finding tools' output using circos."""
     ctx.params["_config"] = \
         FsnVizConfig(which_circos(circos_exe), base_name, out_dir)
 
