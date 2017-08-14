@@ -28,9 +28,14 @@ Currently it accepts outputs of the following gene fusion finding tool:
 Requirements
 ------------
 
-FsnViz runs on Python 3.5 and was tested on Circos 0.69-2. Other Circos
-versions may or may not work.
+FsnViz is tested on the following Python versions:
+    * 3.5
+    * 3.6
 
+and the following Circos versions:
+    * 0.69-2
+
+Other Circos versions may be used but they are not guaranteed to work.
 
 Installation
 ------------

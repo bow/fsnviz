@@ -49,6 +49,7 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: POSIX",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
         "Topic :: Utilities",
         "Topic :: Scientific/Engineering :: Visualization",
     ],
