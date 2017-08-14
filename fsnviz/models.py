@@ -95,11 +95,13 @@ class FusionToolResults(metaclass=abc.ABCMeta):
     def circos_entries(self):
         """Circos entries present in the tool results."""
 
-    def __init__(self, results_fname, config, tpl_params):
+    def __init__(self, results_fname, config, circos_config, tpl_params):
         self._tpl_params = tpl_params
         self._config = config
         out_dir = self.config.out_dir
-        self._circos_config_file = path.join(out_dir, "circos.conf")
+        self._circos_config_file = circos_config or \
+            path.join(out_dir, "circos.conf")
+        self._config_supplied = bool(circos_config)
         self._links_file = path.join(out_dir, "links.txt")
         self._genes_file = path.join(out_dir, "genes.txt")
         self._junction_reads_file = path.join(out_dir, "junction_reads.txt")
@@ -180,5 +182,6 @@ class FusionToolResults(metaclass=abc.ABCMeta):
         self._write_links_file()
         self._write_genes_file()
         self._write_data_files()
-        self._write_circos_config()
+        if not self._config_supplied:
+            self._write_circos_config()
         self._execute_circos()

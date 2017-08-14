@@ -38,6 +38,10 @@ __all__ = []
               help="Karyotype to use. Must be supported by circos. "
                    "If the `--karyotype-file` parameter is defined, "
                    "this parameter is ignored. Default: human.hg19.")
+@click.option("-c", "--circos-conf",
+              type=click.Path(exists=True, dir_okay=False, resolve_path=True),
+              help="Circos configuration file. If not supplied, "
+                   "fsnviz generates a default one.")
 @click.option("--png/--no-png", default=False,
               help="Whether to create PNG plots or not. Default: no.")
 @click.option("--svg/--no-svg", default=True,
@@ -50,8 +54,8 @@ __all__ = []
               help="Circos executable. Default: circos "
                    "(the one accessible via PATH).")
 @click.pass_context
-def main(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
-         circos_exe):
+def main(ctx, out_dir, base_name, karyotype, circos_conf, png, svg,
+         karyotype_file, circos_exe):
     """Plots gene fusion finding tools' output using circos."""
     if out_dir is None:
         out_dir = os.getcwd()
@@ -60,6 +64,7 @@ def main(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
 
     kfile = karyotype_file if karyotype_file is not None else gkf(karyotype)
     # Parameters passable directly to our jinja template
+    ctx.params["circos_config"] = circos_conf
     ctx.params["_j2"] = {
         "karyotype": kfile,
         "image_dir": out_dir,
@@ -75,6 +80,7 @@ def main(ctx, out_dir, base_name, karyotype, png, svg, karyotype_file,
 def star_fusion(ctx, input):
     """Plots output of STAR-Fusion."""
     res = STARFusionResults(input, ctx.parent.params["_config"],
+                            ctx.parent.params["circos_config"],
                             ctx.parent.params["_j2"])
     res.plot()
 
@@ -85,5 +91,6 @@ def star_fusion(ctx, input):
 def fusioncatcher(ctx, input):
     """Plots output of FusionCatcher."""
     res = FusionCatcherResults(input, ctx.parent.params["_config"],
+                               ctx.parent.params["circos_config"],
                                ctx.parent.params["_j2"])
     res.plot()
