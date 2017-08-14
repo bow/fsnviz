@@ -28,7 +28,7 @@ karyotype                   = {{ karyotype }}
   dir*               = {{ image_dir|default(".") }}
   file*              = {{ image_file }}
   png*               = {{ image_png|default("no") }}
-  radius*            = 2600p
+  radius*            = 2150p
   svg*               = {{ image_svg|default("yes") }}
 </image>
 
@@ -44,7 +44,7 @@ karyotype                   = {{ karyotype }}
   label_case     = upper
   label_font     = condensedbold
   label_parallel = yes
-  label_radius   = dims(ideogram,radius) - 0.12r
+  label_radius   = dims(ideogram,radius) - 0.13r
   label_size     = 60
   label_with_tag = yes
   radius         = 0.70r
@@ -115,7 +115,7 @@ karyotype                   = {{ karyotype }}
     file                           = {{ gene_labels_file }}
     label_font                     = condensed
     label_rotate                   = yes
-    label_size                     = 50p
+    label_size                     = 40p
     label_snuggle                  = yes
     link_color                     = grey
     link_dims                      = 4p,200p,40p,20p,10p
