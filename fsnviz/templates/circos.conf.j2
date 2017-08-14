@@ -28,7 +28,7 @@ karyotype                   = {{ karyotype }}
   dir*               = {{ image_dir|default(".") }}
   file*              = {{ image_file }}
   png*               = {{ image_png|default("no") }}
-  radius*            = 2000p
+  radius*            = 2600p
   svg*               = {{ image_svg|default("yes") }}
 </image>
 
@@ -44,7 +44,7 @@ karyotype                   = {{ karyotype }}
   label_case     = upper
   label_font     = condensedbold
   label_parallel = yes
-  label_radius   = dims(ideogram,radius) - 0.14r
+  label_radius   = dims(ideogram,radius) - 0.12r
   label_size     = 60
   label_with_tag = yes
   radius         = 0.70r
@@ -81,7 +81,7 @@ karyotype                   = {{ karyotype }}
 # fusion links
 <links>
   bezier_radius = 0.6r
-  radius        = 0.93r
+  radius        = 0.92r
   z             = 0
 
   <link segdup>
