@@ -1,6 +1,14 @@
 FsnViz
 ======
 
+======================
+:warning: unmaintained
+======================
+
+No one is actively working on this repository anymore.
+
+--------
+
 |ci| |coverage| |pypi|
 
 .. |ci| image:: https://travis-ci.org/bow/fsnviz.svg?branch=master
